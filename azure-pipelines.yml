@@ -1,0 +1,25 @@
+# Node.js
+# Build a general Node.js project with npm.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '14.x'
+  displayName: 'Managex API'
+
+- script: |
+    npm install
+    npm run migration:run
+    npm run build
+    npm run migration:run
+    npm run seed:run
+    pm2 start dist/main.js --name managex-api
+  displayName: 'npm install and build'
