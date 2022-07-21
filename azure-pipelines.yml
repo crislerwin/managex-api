@@ -16,6 +16,7 @@ steps:
   displayName: 'Managex API'
 
 - script: |
+    git pull
     npm install
     npm run migration:run
     npm run build
