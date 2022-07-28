@@ -17,7 +17,6 @@ import { FileEntity } from '../../files/entities/file.entity';
 import * as bcrypt from 'bcryptjs';
 import { EntityHelper } from 'src/utils/entity-helper';
 import { AuthProvidersEnum } from 'src/auth/auth-providers.enum';
-import { Enterprise } from '../../enterprises/entities/enterprises.entity';
 
 @Entity()
 export class User extends EntityHelper {
@@ -60,11 +59,6 @@ export class User extends EntityHelper {
   @Index()
   @Column({ nullable: true })
   lastName: string | null;
-
-  @ManyToOne(() => Enterprise, {
-    eager: true,
-  })
-  enterprise?: Enterprise | null;
 
   @ManyToOne(() => FileEntity, {
     eager: true,
