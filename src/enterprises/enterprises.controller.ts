@@ -32,12 +32,12 @@ import { infinityPagination } from 'src/utils/infinity-pagination';
   version: '1',
 })
 export class EnterprisesController {
-  constructor(private readonly usersService: EnterprisesService) {}
+  constructor(private readonly enterpriseServices: EnterprisesService) {}
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
   create(@Body() createProfileDto: CreateEnterpriseDto) {
-    return this.usersService.create(createProfileDto);
+    return this.enterpriseServices.create(createProfileDto);
   }
 
   @Get()
@@ -51,7 +51,7 @@ export class EnterprisesController {
     }
 
     return infinityPagination(
-      await this.usersService.findManyWithPagination({
+      await this.enterpriseServices.findManyWithPagination({
         page,
         limit,
       }),
@@ -62,7 +62,7 @@ export class EnterprisesController {
   @Get(':id')
   @HttpCode(HttpStatus.OK)
   findOne(@Param('id') id: string) {
-    return this.usersService.findOne({ id: +id });
+    return this.enterpriseServices.findOne({ id: +id });
   }
 
   @Patch(':id')
@@ -71,11 +71,11 @@ export class EnterprisesController {
     @Param('id') id: number,
     @Body() updateProfileDto: UpdateEnterpriseDto,
   ) {
-    return this.usersService.update(id, updateProfileDto);
+    return this.enterpriseServices.update(id, updateProfileDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: number) {
-    return this.usersService.softDelete(id);
+    return this.enterpriseServices.softDelete(id);
   }
 }

@@ -73,7 +73,7 @@ npm run seed:run
 npm run start:dev
 ```
 
-## Links
+## LPinks
 
 - Swagger: http://localhost:3000/docs
 - Adminer (client for DB): http://localhost:8080

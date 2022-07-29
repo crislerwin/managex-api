@@ -11,31 +11,31 @@ import { Enterprise } from './entities/enterprises.entity';
 export class EnterprisesService {
   constructor(
     @InjectRepository(Enterprise)
-    private usersRepository: Repository<Enterprise>,
+    private enterpriseRepository: Repository<Enterprise>,
   ) {}
 
-  create(createProfileDto: CreateEnterpriseDto) {
-    return this.usersRepository.save(
-      this.usersRepository.create(createProfileDto),
+  create(createEnterpriseDto: CreateEnterpriseDto) {
+    return this.enterpriseRepository.save(
+      this.enterpriseRepository.create(createEnterpriseDto),
     );
   }
 
   findManyWithPagination(paginationOptions: IPaginationOptions) {
-    return this.usersRepository.find({
+    return this.enterpriseRepository.find({
       skip: (paginationOptions.page - 1) * paginationOptions.limit,
       take: paginationOptions.limit,
     });
   }
 
   findOne(fields: EntityCondition<Enterprise>) {
-    return this.usersRepository.findOne({
+    return this.enterpriseRepository.findOne({
       where: fields,
     });
   }
 
   update(id: number, updateProfileDto: UpdateEnterpriseDto) {
-    return this.usersRepository.save(
-      this.usersRepository.create({
+    return this.enterpriseRepository.save(
+      this.enterpriseRepository.create({
         id,
         ...updateProfileDto,
       }),
@@ -43,6 +43,6 @@ export class EnterprisesService {
   }
 
   async softDelete(id: number): Promise<void> {
-    await this.usersRepository.softDelete(id);
+    await this.enterpriseRepository.softDelete(id);
   }
 }
