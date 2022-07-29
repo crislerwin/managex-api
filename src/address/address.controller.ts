@@ -13,9 +13,9 @@ import {
   HttpStatus,
   HttpCode,
 } from '@nestjs/common';
-import { EnterprisesService } from './enterprises.service';
-import { CreateEnterpriseDto } from './dto/create-enterprise.dto';
-import { UpdateEnterpriseDto } from './dto/update-enterprise.dto';
+import { AddressService } from './address.service';
+import { CreateAddressDto } from './dto/create-address.dto';
+import { UpdateAddressDto } from './dto/update-address.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/roles/roles.decorator';
 import { RoleEnum } from 'src/roles/roles.enum';
@@ -26,18 +26,18 @@ import { infinityPagination } from 'src/utils/infinity-pagination';
 @ApiBearerAuth()
 @Roles(RoleEnum.admin)
 @UseGuards(AuthGuard('jwt'), RolesGuard)
-@ApiTags('Enterprises')
+@ApiTags('Address')
 @Controller({
-  path: 'enterprises',
+  path: 'address',
   version: '1',
 })
-export class EnterprisesController {
-  constructor(private readonly enterpriseServices: EnterprisesService) {}
+export class AddressController {
+  constructor(private readonly addressService: AddressService) {}
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  create(@Body() createProfileDto: CreateEnterpriseDto) {
-    return this.enterpriseServices.create(createProfileDto);
+  create(@Body() createAddressDto: CreateAddressDto) {
+    return this.addressService.create(createAddressDto);
   }
 
   @Get()
@@ -51,7 +51,7 @@ export class EnterprisesController {
     }
 
     return infinityPagination(
-      await this.enterpriseServices.findManyWithPagination({
+      await this.addressService.findManyWithPagination({
         page,
         limit,
       }),
@@ -62,20 +62,17 @@ export class EnterprisesController {
   @Get(':id')
   @HttpCode(HttpStatus.OK)
   findOne(@Param('id') id: string) {
-    return this.enterpriseServices.findOne({ id: +id });
+    return this.addressService.findOne({ id: +id });
   }
 
   @Patch(':id')
   @HttpCode(HttpStatus.OK)
-  update(
-    @Param('id') id: number,
-    @Body() updateEnterpriseDto: UpdateEnterpriseDto,
-  ) {
-    return this.enterpriseServices.update(id, updateEnterpriseDto);
+  update(@Param('id') id: number, @Body() updateAddresDto: UpdateAddressDto) {
+    return this.addressService.update(id, updateAddresDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: number) {
-    return this.enterpriseServices.softDelete(id);
+    return this.addressService.softDelete(id);
   }
 }
