@@ -33,11 +33,11 @@ export class EnterprisesService {
     });
   }
 
-  update(id: number, updateProfileDto: UpdateEnterpriseDto) {
+  update(id: number, updateEnterprise: UpdateEnterpriseDto) {
     return this.enterpriseRepository.save(
       this.enterpriseRepository.create({
         id,
-        ...updateProfileDto,
+        ...updateEnterprise,
       }),
     );
   }
