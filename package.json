@@ -31,7 +31,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "env-cmd jest --config ./test/jest-e2e.json"
   },
-  "dependenacies": {
+  "dependencies": {
     "@nestjs-modules/mailer": "1.6.1",
     "@nestjs/common": "8.4.7",
     "@nestjs/config": "2.1.0",
