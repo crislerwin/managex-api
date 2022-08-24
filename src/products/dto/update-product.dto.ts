@@ -3,15 +3,15 @@ import { IsNotEmpty } from 'class-validator';
 import { CreateProductDto } from './create-product.dto';
 
 export class UpdateProductDto extends PartialType(CreateProductDto) {
-  @ApiProperty()
+  @ApiProperty({ example: 'Product 1' })
   @IsNotEmpty()
   name: string | null;
 
-  @ApiProperty({ example: 'John Doe' })
+  @ApiProperty({ example: 10 })
   @IsNotEmpty()
   amount: number | null;
 
-  @ApiProperty({ example: 10 })
+  @ApiProperty({ example: 'Beer' })
   @IsNotEmpty()
   category: string | null;
 
