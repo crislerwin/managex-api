@@ -12,8 +12,8 @@ import { Address } from '../../address/entities/address.entity';
 
 @Entity()
 export class Enterprise extends EntityHelper {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column({ nullable: true })
   enterpriseName: string;

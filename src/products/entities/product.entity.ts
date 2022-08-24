@@ -11,10 +11,10 @@ import { EntityHelper } from 'src/utils/entity-helper';
 @Entity()
 export class Product extends EntityHelper {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column()
-  enterpriseId: number;
+  enterpriseId: string;
 
   @Column({ nullable: true })
   name: string;

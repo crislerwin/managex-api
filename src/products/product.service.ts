@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { EntityCondition } from 'src/utils/types/entity-condition.type';
 import { IPaginationOptions } from 'src/utils/types/pagination-options';
 import { Repository } from 'typeorm';
-import { Enterprise } from '../enterprises/entities/enterprises.entity';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Product } from './entities/product.entity';
@@ -13,10 +12,9 @@ export class ProductService {
   constructor(
     @InjectRepository(Product)
     private productRepository: Repository<Product>,
-    private enterpriseRepository: Repository<Enterprise>,
   ) {}
 
-  create(createProductDto: CreateProductDto, enterpriseId: number) {
+  create(createProductDto: CreateProductDto, enterpriseId: string) {
     return this.productRepository.save(
       this.productRepository.create({
         ...createProductDto,
@@ -25,29 +23,42 @@ export class ProductService {
     );
   }
 
-  findManyWithPagination(paginationOptions: IPaginationOptions) {
+  findManyWithPagination(
+    paginationOptions: IPaginationOptions,
+    enterpriseId: string,
+  ) {
     return this.productRepository.find({
+      where: {
+        enterpriseId,
+      },
       skip: (paginationOptions.page - 1) * paginationOptions.limit,
       take: paginationOptions.limit,
     });
   }
 
-  findOne(fields: EntityCondition<Product>) {
+  findOne(enterpriseId: string, fields: EntityCondition<Product>) {
     return this.productRepository.findOne({
-      where: fields,
+      where: {
+        enterpriseId,
+        ...fields,
+      },
     });
   }
 
-  update(id: number, updateProduct: UpdateProductDto) {
+  update(enterpriseId: string, id: string, updateProduct: UpdateProductDto) {
     return this.productRepository.save(
       this.productRepository.create({
+        enterpriseId,
         id,
         ...updateProduct,
       }),
     );
   }
 
-  async softDelete(id: number): Promise<void> {
-    await this.productRepository.softDelete(id);
+  async softDelete(enterpriseId: string, id: string): Promise<void> {
+    await this.productRepository.softDelete({
+      enterpriseId,
+      id,
+    });
   }
 }

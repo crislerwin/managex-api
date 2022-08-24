@@ -33,7 +33,7 @@ export class EnterprisesService {
     });
   }
 
-  update(id: number, updateEnterprise: UpdateEnterpriseDto) {
+  update(id: string, updateEnterprise: UpdateEnterpriseDto) {
     return this.enterpriseRepository.save(
       this.enterpriseRepository.create({
         id,
@@ -42,7 +42,7 @@ export class EnterprisesService {
     );
   }
 
-  async softDelete(id: number): Promise<void> {
+  async softDelete(id: string): Promise<void> {
     await this.enterpriseRepository.softDelete(id);
   }
 }
