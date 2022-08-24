@@ -36,8 +36,11 @@ export class ProductController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  create(@Body() createProductDto: CreateProductDto) {
-    return this.productServices.create(createProductDto);
+  create(
+    @Body() createProductDto: CreateProductDto,
+    @Param('enterpriseId') enterpriseId: number,
+  ) {
+    return this.productServices.create(createProductDto, enterpriseId);
   }
 
   @Get()

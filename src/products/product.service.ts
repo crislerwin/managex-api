@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { EntityCondition } from 'src/utils/types/entity-condition.type';
 import { IPaginationOptions } from 'src/utils/types/pagination-options';
 import { Repository } from 'typeorm';
+import { Enterprise } from '../enterprises/entities/enterprises.entity';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Product } from './entities/product.entity';
@@ -12,11 +13,15 @@ export class ProductService {
   constructor(
     @InjectRepository(Product)
     private productRepository: Repository<Product>,
+    private enterpriseRepository: Repository<Enterprise>,
   ) {}
 
-  create(createProductDto: CreateProductDto) {
+  create(createProductDto: CreateProductDto, enterpriseId: number) {
     return this.productRepository.save(
-      this.productRepository.create(createProductDto),
+      this.productRepository.create({
+        ...createProductDto,
+        enterpriseId,
+      }),
     );
   }
 

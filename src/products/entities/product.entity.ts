@@ -13,6 +13,9 @@ export class Product extends EntityHelper {
   @PrimaryGeneratedColumn('uuid')
   id: number;
 
+  @Column()
+  enterpriseId: number;
+
   @Column({ nullable: true })
   name: string;
 
@@ -24,6 +27,9 @@ export class Product extends EntityHelper {
 
   @Column({ nullable: true })
   price: number | null;
+
+  @Column({ nullable: true })
+  isOffer: boolean | null;
 
   @CreateDateColumn()
   createdAt: Date;

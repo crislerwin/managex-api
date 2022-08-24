@@ -17,6 +17,9 @@ import { AuthRegisterLoginDto } from './dto/auth-register-login.dto';
 import { UsersService } from 'src/users/users.service';
 import { ForgotService } from 'src/forgot/forgot.service';
 import { MailService } from 'src/mail/mail.service';
+import { ProductService } from '../products/product.service';
+import { Product } from '../products/entities/product.entity';
+import { AuthProductsDto } from './dto/auth-products.dto';
 
 @Injectable()
 export class AuthService {
@@ -25,6 +28,7 @@ export class AuthService {
     private usersService: UsersService,
     private forgotService: ForgotService,
     private mailService: MailService,
+    private productService: ProductService,
   ) {}
 
   async validateLogin(
@@ -301,6 +305,14 @@ export class AuthService {
     return this.usersService.findOne({
       id: user.id,
     });
+  }
+
+  async createProducts(
+    enterpriseId: number,
+    productsDto: AuthProductsDto,
+  ): Promise<Product> {
+    const products = this.productService.create(productsDto, enterpriseId);
+    return products;
   }
 
   async softDelete(user: User): Promise<void> {
