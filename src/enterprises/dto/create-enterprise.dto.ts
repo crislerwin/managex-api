@@ -4,7 +4,7 @@ import { Address } from '../../address/entities/address.entity';
 import { IsExist } from '../../utils/validators/is-exists.validator';
 
 export class CreateEnterpriseDto {
-  @ApiProperty()
+  @ApiProperty({ example: 'Enterprise 1' })
   @IsNotEmpty()
   enterpriseName: string | null;
 
