@@ -21,7 +21,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe(validationOptions));
 
   const options = new DocumentBuilder()
-    .setTitle('API')
+    .setTitle('Managex API')
     .setDescription('API docs')
     .setVersion('1.0')
     .addBearerAuth()
