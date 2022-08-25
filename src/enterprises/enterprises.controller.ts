@@ -62,20 +62,20 @@ export class EnterprisesController {
   @Get(':id')
   @HttpCode(HttpStatus.OK)
   findOne(@Param('id') id: string) {
-    return this.enterpriseServices.findOne({ id: +id });
+    return this.enterpriseServices.findOne(id);
   }
 
   @Patch(':id')
   @HttpCode(HttpStatus.OK)
   update(
-    @Param('id') id: number,
+    @Param('id') id: string,
     @Body() updateEnterpriseDto: UpdateEnterpriseDto,
   ) {
     return this.enterpriseServices.update(id, updateEnterpriseDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: number) {
+  remove(@Param('id') id: string) {
     return this.enterpriseServices.softDelete(id);
   }
 }

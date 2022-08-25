@@ -11,7 +11,10 @@ import { EntityHelper } from 'src/utils/entity-helper';
 @Entity()
 export class Product extends EntityHelper {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
+
+  @Column('uuid')
+  enterpriseId: string;
 
   @Column({ nullable: true })
   name: string;
@@ -24,6 +27,9 @@ export class Product extends EntityHelper {
 
   @Column({ nullable: true })
   price: number | null;
+
+  @Column({ nullable: true })
+  isOffer: boolean | null;
 
   @CreateDateColumn()
   createdAt: Date;

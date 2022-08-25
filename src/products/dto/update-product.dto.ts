@@ -15,6 +15,10 @@ export class UpdateProductDto extends PartialType(CreateProductDto) {
   @IsNotEmpty()
   category: string | null;
 
+  @ApiProperty({ example: false })
+  @IsNotEmpty()
+  isOffer: boolean | null;
+
   @ApiProperty({ example: 10 })
   @IsNotEmpty()
   price: number | null;

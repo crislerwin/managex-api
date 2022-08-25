@@ -28,51 +28,68 @@ import { infinityPagination } from 'src/utils/infinity-pagination';
 @UseGuards(AuthGuard('jwt'), RolesGuard)
 @ApiTags('Products')
 @Controller({
-  path: 'products',
   version: '1',
 })
 export class ProductController {
   constructor(private readonly productServices: ProductService) {}
 
-  @Post()
+  @Post('product/:enterpriseId')
   @HttpCode(HttpStatus.CREATED)
-  create(@Body() createProductDto: CreateProductDto) {
-    return this.productServices.create(createProductDto);
+  create(
+    @Body() createProductDto: CreateProductDto,
+    @Param('enterpriseId') enterpriseId: string,
+  ) {
+    return this.productServices.create(createProductDto, enterpriseId);
   }
 
-  @Get()
+  @Get('products/:enterpriseId')
   @HttpCode(HttpStatus.OK)
   async findAll(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
+    @Param('enterpriseId') enterpriseId: string,
   ) {
     if (limit > 50) {
       limit = 50;
     }
 
     return infinityPagination(
-      await this.productServices.findManyWithPagination({
-        page,
-        limit,
-      }),
+      await this.productServices.findManyWithPagination(
+        {
+          page,
+          limit,
+        },
+        enterpriseId,
+      ),
       { page, limit },
     );
   }
 
-  @Get(':id')
+  @Get('product/:enterpriseId/:productId')
   @HttpCode(HttpStatus.OK)
-  findOne(@Param('id') id: string) {
-    return this.productServices.findOne({ id: +id });
+  findOne(
+    @Param('enterpriseId') enterpriseId: string,
+    @Param('productId') productId: string,
+  ) {
+    return this.productServices.findOne(enterpriseId, { id: productId });
   }
 
-  @Patch(':id')
+  @Patch('product/:enterpriseId/:productId')
   @HttpCode(HttpStatus.OK)
-  update(@Param('id') id: number, @Body() updateProductDto: UpdateProductDto) {
-    return this.productServices.update(id, updateProductDto);
+  update(
+    @Param('enterpriseId') enterpriseId: string,
+    @Param('productId') productId: string,
+    @Body() updateProductDto: UpdateProductDto,
+  ) {
+    return this.productServices.update(
+      enterpriseId,
+      productId,
+      updateProductDto,
+    );
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: number) {
-    return this.productServices.softDelete(id);
+  @Delete('product/:enterpriseId/:productId')
+  remove(@Param('enterpriseId') enterpriseId: string, @Param('id') id: string) {
+    return this.productServices.softDelete(enterpriseId, id);
   }
 }
