@@ -13,7 +13,7 @@ export class Product extends EntityHelper {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column('uuid')
   enterpriseId: string;
 
   @Column({ nullable: true })

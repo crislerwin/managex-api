@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { EntityCondition } from 'src/utils/types/entity-condition.type';
 import { IPaginationOptions } from 'src/utils/types/pagination-options';
 import { Repository } from 'typeorm';
 import { CreateEnterpriseDto } from './dto/create-enterprise.dto';
@@ -27,9 +26,11 @@ export class EnterprisesService {
     });
   }
 
-  findOne(fields: EntityCondition<Enterprise>) {
+  findOne(enterpriseId: string): Promise<Enterprise> {
     return this.enterpriseRepository.findOne({
-      where: fields,
+      where: {
+        id: enterpriseId,
+      },
     });
   }
 

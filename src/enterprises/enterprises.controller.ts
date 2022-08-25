@@ -62,7 +62,7 @@ export class EnterprisesController {
   @Get(':id')
   @HttpCode(HttpStatus.OK)
   findOne(@Param('id') id: string) {
-    return this.enterpriseServices.findOne({ id });
+    return this.enterpriseServices.findOne(id);
   }
 
   @Patch(':id')
